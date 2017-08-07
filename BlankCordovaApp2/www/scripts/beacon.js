@@ -27,7 +27,7 @@ function startRange() {
 
         if (existBeacon != undefined) {
 
-            existBeacon.innerHTML = '<img src = "images/beacon.png" style = "width:15%;height:15%;float:left;margin-right:5%;margin-left:5%;">';
+            existBeacon.innerHTML = '<a href = "setBeacon.html"><img src = "images/beacon.png" style = "width:15%;height:15%;float:left;margin-right:5%;margin-left:5%;"></a>';
 
             existBeacon.innerHTML += "name : " + name + "<br>"
                                     + "major : " + major + "<br>"
