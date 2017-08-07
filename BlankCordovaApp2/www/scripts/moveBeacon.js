@@ -2,6 +2,9 @@
     var t;
     var s = str;
 
+    var down = 0;
+    var beacon;
+
     function init() {
         scene = new THREE.Scene();
 
@@ -28,48 +31,41 @@
 
         t = new squareScene(500, 500, scene);
 
+        beacon = new beaconCircle(scene);
+
+
+        document.getElementById("main").addEventListener('mousemove', onMouseMove, false);
+        document.getElementById("main").addEventListener('mousedown', onMouseDown, false);
+        document.getElementById("main").addEventListener('mouseup', onMouseUp, false);
+
+
+        function onMouseMove(mouse) {
+            if (down == 1) {
+
+                var vector = new THREE.Vector3(475, 302, 0.5);
+                var mouseVector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+
+                beacon.position.x = mouse.x - 400;
+                beacon.position.z = mouse.y - 500;
+            }
+        }
+
+        function onMouseUp() {
+            down = 0;
+        }
+
+
+        function onMouseDown() {
+            down = 1;
+        }
+
+       
+
        
 
 
     }
 
-    document.addEventListener('mousedown', onMouseDown, false);
-
-
-    function onMouseDown(e) {
-        event.preventDefault();
-
-        var vector = new THREE.Vector3(
-            (event.clientX / window.innerWidth) * 2 - 1,
-            - (event.clientY / window.innerHeight) * 2 + 1,
-            0.5
-        );
-        projector.unprojectVector(vector, camera);
-
-        var ray = new THREE.Ray(camera.position,
-            vector.subSelf(camera.position).normalize());
-
-        var intersects = ray.intersectObjects(objects);
-
-        if (intersects.length > 0) {
-
-            intersects[0].object.materials[0].color.setHex(Math.random() * 0xffffff);
-
-            var particle = new THREE.Particle(particleMaterial);
-            particle.position = intersects[0].point;
-            particle.scale.x = particle.scale.y = 8;
-            scene.add(particle);
-
-        }
-
-    /*
-    // Parse all the faces
-    for ( var i in intersects ) {
-        intersects[ i ].face.material[ 0 ].color
-            .setHex( Math.random() * 0xffffff | 0x80000000 );
-    }
-    */
-    }
 
     init();
     animate();

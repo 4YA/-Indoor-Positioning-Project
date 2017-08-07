@@ -3,6 +3,7 @@
     var scene, renderer, camera, light;
     var t;
     var s = str;
+    
 
     function init(){
         scene = new THREE.Scene();
@@ -17,7 +18,7 @@
 
 
         camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(100, 800, 100);
+        camera.position.set(0, 800, 0);
         camera.lookAt(scene.position);
 
 
@@ -29,12 +30,29 @@
         document.getElementById("showScene").appendChild(renderer.domElement);
         renderer.render(scene, camera);
 
+       
+
+
+
+
+
 
 
 
     }
 
     init();
+    animate();
+
+    function animate()
+    {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+    
+
+
 
     this.updateScene = function (x, y) {
         scene.remove(t);
@@ -42,13 +60,5 @@
             t = new circleScene(x, y, scene);
         else
             t = new squareScene(x, y, scene);
-       
-        renderer.setClearColor(0xffffff);
-
-
-        document.body.appendChild(renderer.domElement);
-        renderer.render(scene, camera);
-
-
     }
 }

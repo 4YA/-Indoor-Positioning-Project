@@ -40,7 +40,6 @@
         $("#add").fadeIn("slow");
 
 
-        window.open("step1.html");
     }
 
     
