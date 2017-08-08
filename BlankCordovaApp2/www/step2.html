@@ -95,33 +95,31 @@
 </head>
 
 <body class="animsition" style="padding-top:50px">
-    <ul class="pager">
-        <li class="previous"><a href="index.html">Previous</a></li>
-    </ul>
-    <div class="container-fluid">
-        <div class="jumbotron text-center">
-            <h1>Step 2 : 設計尺寸</h1>
-        </div>
+    <div class="container">
+        <ul class="pager">
+            <li class="previous"><a href="index.html">Previous</a></li>
+        </ul>
+        <div class="container-fluid">
+            <div class="jumbotron text-center">
+                <h1>Step 2 : 設計尺寸</h1>
+            </div>
 
-       
-       
-        <div class="form-group">
-            <label>長(m):</label>
-            <input type="text" class="form-control" id="length">
-        </div>
-        <div class="form-group">
-            <label>寬(m):</label>
-            <input type="text" class="form-control" id="width">
-        </div>
 
-        <button type="button" class="btn" onclick="updateScene();">確定</button>
-       
-        <div id="showScene">
-            
+            <div class="form-group">
+                <label>長(m):</label>
+                <input type="text" class="form-control" id="length">
+            </div>
+            <div class="form-group">
+                <label>寬(m):</label>
+                <input type="text" class="form-control" id="width">
+            </div>
+            <button type="button" class="btn" onclick="updateScene();">確定</button>
+
+            <div id="showScene">
+
+            </div>
+            <a href="step3.html"><button type="button" id="next" class="btn btn-success" style="display:none;float:right">下一頁</button></a>
         </div>
-
-        <a href="step3.html"><button type="button" id="next" class="btn btn-success" style="display:none;float:right">下一頁</button></a>
-    </div>
-
-</body>
+       </div>
+    </body>
 </html>

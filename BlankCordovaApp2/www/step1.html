@@ -123,37 +123,31 @@
 </head>
 
 <body class ="animsition" style="padding-top:50px">
-    <ul class="pager">
-        <li class="previous"><a href="index.html">Previous</a></li>
-    </ul>
-    <div class="container-fluid">
-        <div class="jumbotron text-center">
-            <h1>Step 1 : 選擇您的平面圖</h1>
+    <div class="container">
+        <ul class="pager">
+            <li class="previous"><a href="index.html">Previous</a></li>
+        </ul>
+        <div class="container-fluid">
+            <div class="jumbotron text-center">
+                <h1>Step 1 : 選擇您的平面圖</h1>
+            </div>
+
+            <span style="color:cornflowerblue">您可以選擇預設的</span><br>
+            <a href="step2.html">
+                <img src="images/Rect.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;">
+            </a>
+            <a href="step2.html">
+                <img src="images/Circle.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;">
+            </a>
+            <br>
+            <br>
+            <span style="color:cornflowerblue">也可以載入自己的平面圖</span><br>
+            <img class="animsition-link" src="images/choose.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">
+            <div>
+                <canvas id="canvas" width="490" height="200"></canvas>
+                <img style="display:none;" id="largeImage">
+            </div>
         </div>
-
-
-        <span style="color:cornflowerblue">您可以選擇預設的</span><br>
-
-        <a href="step2.html">
-            <img src="images/Rect.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;">
-        </a>
-        <a href="step2.html">
-            <img src="images/Circle.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;">
-        </a>
-        <br>
-        <br>
-
-        <span style="color:cornflowerblue">也可以載入自己的平面圖</span><br>
-
-        <img class="animsition-link" src="images/choose.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">
-
-        <div>
-            <canvas id="canvas" width="490" height="200"></canvas>
-            <img style="display:none;" id="largeImage">
-
-        </div>
-
-    </div>
-
-</body>
+      </div>
+    </body>
 </html>

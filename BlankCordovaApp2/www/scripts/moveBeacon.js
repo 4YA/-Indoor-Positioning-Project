@@ -1,11 +1,24 @@
 ﻿    var scene, renderer, camera, light;
     var t;
-    var s = str;
+    
 
     var down = 0;
     var beacon;
 
-    function init() {
+    
+
+    window.onload = function () {
+        
+        $.extend($.support, { touch: "ontouchend" in document });
+
+        if (!$.support.touch) {
+            $("body").html("<span>Not a touchable device!</span>");
+        }
+        //停用頁面捲動功能
+        document.body.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+        }, false);
+
         scene = new THREE.Scene();
 
         renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -18,7 +31,7 @@
 
 
         camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(100, 800, 100);
+        camera.position.set(0, 800, 0);
         camera.lookAt(scene.position);
 
 
@@ -34,19 +47,17 @@
         beacon = new beaconCircle(scene);
 
 
-        document.getElementById("main").addEventListener('mousemove', onMouseMove, false);
-        document.getElementById("main").addEventListener('mousedown', onMouseDown, false);
-        document.getElementById("main").addEventListener('mouseup', onMouseUp, false);
+        renderer.domElement.addEventListener('touchmove', onMouseMove, false);
+        renderer.domElement.addEventListener('touchstart', onMouseDown, false);
+        renderer.domElement.addEventListener('touchend', onMouseUp, false);
 
 
         function onMouseMove(mouse) {
             if (down == 1) {
+                console.log(mouse.targetTouches[0].clientX);
 
-                var vector = new THREE.Vector3(475, 302, 0.5);
-                var mouseVector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-
-                beacon.position.x = mouse.x - 400;
-                beacon.position.z = mouse.y - 500;
+                beacon.position.x = mouse.targetTouches[0].clientX - renderer.domElement.width / 2 - 120;
+                beacon.position.z = mouse.targetTouches[0].clientY - renderer.domElement.height / 2;
             }
         }
 
@@ -59,16 +70,21 @@
             down = 1;
         }
 
-       
+        renderer.setClearColor(0xffffff);
 
+      
+      
+
+        animate();
+        console.log("finish");
        
 
 
     }
 
 
-    init();
-    animate();
+    
+   
 
     function animate() {
         requestAnimationFrame(animate);

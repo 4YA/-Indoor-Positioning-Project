@@ -14,10 +14,7 @@
         <script type="text/javascript" charset="utf-8" src="scripts/jquery-2.2.4.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="scripts/three.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
-        <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
-        <script type="text/javascript" charset="utf-8" src="scripts/beaconCircle.js"></script>
+       
         <script>
 
              $(document).ready(function () {
@@ -35,19 +32,19 @@
         <title>step3</title>
     </head>
     <body class="animsition" style="padding-top:50px">
+        <div class="container">
+            <div>
+                <button id="startRangeBtn" type="button" class="btn">startScan</button>
+                <button id="stopRangeBtn" type="button" class="btn">stopScan</button>
 
-        <div>
-            <button id="startRangeBtn" type="button" class="btn">startScan</button>
-            <button id="stopRangeBtn" type="button" class="btn">stopScan</button>
-          
-            
-            <br>
+
+                <br>
+            </div>
+
+            <script type="text/javascript" src="cordova.js"></script>
+            <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+
+            <script type="text/javascript" src="scripts/beacon.js"></script>
         </div>
-
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-
-        <script type="text/javascript" src="scripts/beacon.js"></script>
-       
     </body>
 </html>
