@@ -9,17 +9,20 @@
         scene = new THREE.Scene();
         
         renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(800, 600);
+       
 
-        light = new THREE.PointLight({ color: 0xff0000 });
-        light.position.set(100, 500, 0);
+        
+
+        light = new THREE.PointLight({ color: 0xffffff });
+        light.position.set(0, 500, 0);
         scene.add(light);
 
 
 
         camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(0, 800, 0);
-        camera.lookAt(scene.position);
+        camera.position.set(0, 300, 600);
+        camera.lookAt(new THREE.Vector3(scene.position.x, scene.position.y + 100, scene.position.z));
+        
 
 
        
@@ -29,7 +32,7 @@
         console.log(document.getElementById("showScene"));
         document.getElementById("showScene").appendChild(renderer.domElement);
         renderer.render(scene, camera);
-
+        THREEx.WindowResize(renderer, camera);
        
 
 
@@ -54,8 +57,12 @@
 
 
 
-    this.updateScene = function (x, y) {
-        scene.remove(t);
+    this.updateScene = function (y, x) {
+        console.log(t);
+        if (t != undefined) {
+            for (i = 0; i < t.length; i++)
+                scene.remove(t[i]);
+        }
         if (s == "circle")
             t = new circleScene(x, y, scene);
         else

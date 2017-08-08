@@ -22,8 +22,7 @@
         scene = new THREE.Scene();
 
         renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(800, 600);
-
+        
         light = new THREE.PointLight({ color: 0xff0000 });
         light.position.set(100, 500, 0);
         scene.add(light);
@@ -56,7 +55,7 @@
             if (down == 1) {
                 console.log(mouse.targetTouches[0].clientX);
 
-                beacon.position.x = mouse.targetTouches[0].clientX - renderer.domElement.width / 2 - 120;
+                beacon.position.x = mouse.targetTouches[0].clientX - renderer.domElement.width / 2;
                 beacon.position.z = mouse.targetTouches[0].clientY - renderer.domElement.height / 2;
             }
         }
@@ -77,7 +76,7 @@
 
         animate();
         console.log("finish");
-       
+        THREEx.WindowResize(renderer, camera);
 
 
     }
