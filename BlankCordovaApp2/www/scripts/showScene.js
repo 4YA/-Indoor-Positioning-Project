@@ -10,8 +10,7 @@
         
         renderer = new THREE.WebGLRenderer({ antialias: true });
        
-
-        
+        THREEx.WindowResize(renderer, camera);
 
         light = new THREE.PointLight({ color: 0xffffff });
         light.position.set(0, 500, 0);
@@ -32,7 +31,6 @@
         console.log(document.getElementById("showScene"));
         document.getElementById("showScene").appendChild(renderer.domElement);
         renderer.render(scene, camera);
-        THREEx.WindowResize(renderer, camera);
        
 
 

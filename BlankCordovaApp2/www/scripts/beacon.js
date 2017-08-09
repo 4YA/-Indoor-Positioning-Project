@@ -1,6 +1,6 @@
 ﻿document.getElementById("startRangeBtn").addEventListener("click", startRange);
 document.getElementById("stopRangeBtn").addEventListener("click", stopRange);
-//document.getElementById("startAdvertiseBtn").addEventListener("click", startMonitor);
+//document.getElementById("testBtn").addEventListener("click", startMonitor);
 
 function startRange() {
 
