@@ -108,4 +108,5 @@
   <plugin name="cordova-plugin-camera" spec="~2.4.1" />
   <plugin name="cordova-plugin-compat" spec="~1.1.0" />
   <plugin name="com.unarin.cordova.beacon" spec="~3.4.1" src="https://github.com/petermetz/cordova-plugin-ibeacon.git" />
+  <plugin name="pushbots-cordova-plugin" spec="~1.4.7" />
 </widget>
