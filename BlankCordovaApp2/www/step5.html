@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>step2</title>
+    <title>step5</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
@@ -17,36 +17,18 @@
     <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/three.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/circleScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src='scripts/THREEx.WindowResize.js'></script>
     <script type="text/javascript" charset="utf-8">
 
 
         document.addEventListener("deviceready", onDeviceReady, false);
-        var s;
         
+
 
         //Cordova加载完成会触发
         function onDeviceReady() {
-           
+
         }
 
-        window.onload = function()
-        {
-            var script = document.createElement("script");
-
-            // Add script content
-
-            script.innerHTML = "s = new showScene('square');";
-
-            // Append
-
-           
-            document.getElementById("showScene").appendChild(script);
-        }
       
 
         $(document).ready(function () {
@@ -57,17 +39,6 @@
 
         });
 
-        function updateScene()
-        {
-            var x = document.getElementById("length").value;
-            var y = document.getElementById("width").value;
-           
-            s.updateScene(x, y);
-            document.getElementById("next").style.display = "block";
-
-        }
-
-      
 
     </script>
 
@@ -103,26 +74,18 @@
         </ul>
         <div class="container-fluid">
             <div class="jumbotron text-center">
-                <h1>Step 2 : 設計尺寸</h1>
+                <h1>Step 5 : 設定展場名及瀏覽圖</h1>
             </div>
 
+            <form action="http://localhost:8000/add_item"  method="POST">
+                <input type="text" name="name"/>
+                <button type="button" id="next" class="btn btn-success">送出</button>
+            </form>
+           
 
-            <div class="form-group">
-                <label>長(m):</label>
-                <input type="text" class="form-control" id="length">
-            </div>
-            <div class="form-group">
-                <label>寬(m):</label>
-                <input type="text" class="form-control" id="width">
-            </div>
-            <button type="button" class="btn" onclick="updateScene();">確定</button>
-            <div class="container" id="showScene">
 
-            </div>
-          
-
-            <a href="step3.html"><button type="button" id="next" class="btn btn-success" style="display:none;float:right">下一頁</button></a>
+            
         </div>
-       </div>
-    </body>
+    </div>
+</body>
 </html>
