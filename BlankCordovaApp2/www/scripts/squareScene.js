@@ -24,41 +24,48 @@
         obj[obj.length] = floor;
         scene.add(floor);
     });
+
+    
+    
     
 
-    geometry = new THREE.BoxGeometry(x,(x+y)/2,5);
+    geometry = new THREE.BoxGeometry(x,80,5);
     material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     var wall = new THREE.Mesh(geometry, material);
     texture = loader.load("images/whiteWall.jpg", function () {
       
         wall.material.map = texture;
-        wall.position.set(0, (x + y) / 4, -y / 2);
+        wall.position.set(0, 40, -y / 2);
         obj[obj.length] = wall;
         scene.add(wall);
     });
+
+
+
+
    
    
 
 
 
-    geometry = new THREE.BoxGeometry(5, (x + y) / 2, y);
+    geometry = new THREE.BoxGeometry(5, 80, y);
     material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     var wall2 = new THREE.Mesh(geometry, material);
     texture = loader.load("images/whiteWall.jpg",function () {
         
         wall2.material.map = texture;
-        wall2.position.set(x / 2, (x + y) / 4, 0);
+        wall2.position.set(x / 2, 40, 0);
         obj[obj.length] = wall2;
         scene.add(wall2);
     });
     
-    geometry = new THREE.BoxGeometry(5, (x + y) / 2, y);
+    geometry = new THREE.BoxGeometry(5, 80, y);
     material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     var wall3 = new THREE.Mesh(geometry, material);
     texture = loader.load("images/whiteWall.jpg", function () {
        
         wall3.material.map = texture;
-        wall3.position.set(-x / 2, (x + y) / 4, 0);
+        wall3.position.set(-x / 2, 40, 0);
         obj[obj.length] = wall3;
         scene.add(wall3);
     },function (xhr) {

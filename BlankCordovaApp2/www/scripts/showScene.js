@@ -3,6 +3,7 @@
     var scene, renderer, camera, light;
     var t;
     var s = str;
+    var canvas;
     
 
     function init(){
@@ -10,28 +11,33 @@
         
         renderer = new THREE.WebGLRenderer({ antialias: true });
        
-        THREEx.WindowResize(renderer, camera);
+        
 
         light = new THREE.PointLight({ color: 0xffffff });
-        light.position.set(0, 500, 0);
+        light.position.set(0, 500, 500);
         scene.add(light);
 
 
 
         camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(0, 300, 600);
-        camera.lookAt(new THREE.Vector3(scene.position.x, scene.position.y + 100, scene.position.z));
-        
+        camera.position.set(0, 600, 0);
+        camera.lookAt(scene.position);
 
+        
 
        
         
         renderer.setClearColor(0xffffff);
-
-        console.log(document.getElementById("showScene"));
+        
+      
         document.getElementById("showScene").appendChild(renderer.domElement);
-        renderer.render(scene, camera);
+        THREEx.WindowResize(renderer, camera);
        
+       
+        renderer.render(scene, camera);
+        canvas = document.getElementsByTagName("canvas")[0];
+       
+        document.addEventListener("mousedown",test, false);
 
 
 
@@ -40,6 +46,12 @@
 
 
 
+    }
+
+    function test(e)
+    {
+        if (e.target == canvas)
+            console.log("@@");
     }
 
     init();
@@ -56,7 +68,8 @@
 
 
     this.updateScene = function (y, x) {
-        console.log(t);
+       
+        
         if (t != undefined) {
             for (i = 0; i < t.length; i++)
                 scene.remove(t[i]);

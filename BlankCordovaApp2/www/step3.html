@@ -2,19 +2,14 @@
 <html>
 <head>
     <title>step3</title>
-
-    <!--
-        視需要在下方的中繼標籤中自訂內容安全性原則。將 'unsafe-inline' 加入 default-src 以啟用內嵌 JavaScript。
-        如需詳細資料，請參閱 http://go.microsoft.com/fwlink/?LinkID=617521
-    -->
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
+    <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/animsition.min.css">
+
 
 
 
@@ -22,12 +17,37 @@
     <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-    <script type="text/javascript" src="scripts/beacon.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/three.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/circleScene.js"></script>
+    <script type="text/javascript" charset="utf-8" src='scripts/THREEx.WindowResize.js'></script>
+    <script type="text/javascript" charset="utf-8">
 
 
+        document.addEventListener("deviceready", onDeviceReady, false);
+        var s;
+        
 
-    <script>
+        //Cordova加载完成会触发
+        function onDeviceReady() {
+           
+        }
+
+        window.onload = function()
+        {
+            var script = document.createElement("script");
+
+            // Add script content
+
+            script.innerHTML = "s = new showScene('square');";
+
+            // Append
+
+           
+            document.getElementById("showScene").appendChild(script);
+        }
+      
 
         $(document).ready(function () {
             $('.animsition').animsition({
@@ -36,28 +56,74 @@
             })
 
         });
+
+        function updateScene()
+        {
+            var x = document.getElementById("length").value;
+            var y = document.getElementById("width").value;
+           
+            s.updateScene(x, y);
+            document.getElementById("next").style.display = "block";
+
+        }
+
+      
+
     </script>
+
+    <style>
+        .container-fluid {
+            min-height: 100%;
+            height: 100%;
+        }
+
+        span {
+            font-weight: bold;
+            font-size: 30px;
+            font-family: 微軟正黑體;
+        }
+
+        img {
+            opacity: 0.5;
+            filter: alpha(opacity=50); /* For IE8 and earlier */
+        }
+
+            img:hover {
+                opacity: 1.0;
+                filter: alpha(opacity=100); /* For IE8 and earlier */
+            }
+    </style>
+
 </head>
 
-<body class="animsition" style="padding-top:50px">
+<body class="animsition">
     <div class="container">
         <ul class="pager">
             <li class="previous"><a href="step2.html">Previous</a></li>
         </ul>
-    
+        <div class="container-fluid">
             <div class="jumbotron text-center">
-                <h1>Step 3 : 設置你的beacon點</h1>
+                <h1>Step 3 : 設計尺寸</h1>
             </div>
-  
-            <div>
-               
 
 
-            <br>
+            <div class="form-group">
+                <label>長(m):</label>
+                <input type="text" class="form-control" id="length">
             </div>
-            <a href="setBeacon.html"><button id="testBtn">testBtn</button></a>
-            <a href="step5.html"><button type="button" id="next" class="btn btn-success">下一頁</button></a>
-     </div>
-            
-</body>
+            <div class="form-group">
+                <label>寬(m):</label>
+                <input type="text" class="form-control" id="width">
+            </div>
+            <button type="button" class="btn" onclick="updateScene();">確定</button>
+            <strong style="margin-left:10px">注意，展場模擬只呈現長寬比例</strong>
+            <div class="container" id="showScene">
+
+            </div>
+          
+
+            <a href="step4.html"><button type="button" id="next" class="btn btn-success" style="display:none;float:right">下一頁</button></a>
+        </div>
+       </div>
+    </body>
 </html>

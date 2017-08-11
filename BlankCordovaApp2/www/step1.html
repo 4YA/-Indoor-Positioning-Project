@@ -1,36 +1,63 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Capture Photo</title>
+    <title>step1</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/animsition.min.css">
 
 
-
-    
-    <script type="text/javascript" src="scripts/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/jquery.Jcrop.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-
     <script type="text/javascript" charset="utf-8">
+
+        var outside_c;
+        var uri;
+        var jcrop_api;
+      
+        
+
+        function cutdown() {
+            jQuery(function ($) {
+                
+                $('#largeImage').Jcrop({
+                    onChange: changeCoords,
+                    onSelect: changeCoords,
+                }, function () {
+                  
+                    jcrop_api = this;
+                    allowResize = false;
+                });
+
+            });
+
+            function changeCoords(c) {
+
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#x2').val(c.x2);
+                $('#y2').val(c.y2);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                outside_c = c;  
+              
+                document.getElementById("getCutRange").style.display = "block";
+            };
+            
+            
+        }
         var pictureSource;
         var destinationType;
 
         document.addEventListener("deviceready", onDeviceReady, false);
-
-        function clearPlan() {
-            document.getElementById('canvas').style.display = "none";
-            document.getElementById('canvas').getContext('2d').clearRect(0, 0, 490, 200); // Clears the canvas
-            document.getElementById('largeImage').style.display = "none";
-        }
 
         //Cordova加载完成会触发
         function onDeviceReady() {
@@ -50,20 +77,57 @@
         function onPhotoURISuccess(imageURI) {
             //打印出照片路径
             console.log(imageURI);
-            //显示照片
+
             var largeImage = document.getElementById('largeImage');
-            clearPlan();
+            if ($('#largeImage').data('Jcrop')) {
+                $('#largeImage').data('Jcrop').destroy();
+            }
+            largeImage.innerHTML = "";
+            //jcrop_api.destroy();
+            
+             uri = imageURI;
+            //显示照片
+           
             largeImage.style.display = 'block';
             largeImage.src = imageURI;
 
             upload(imageURI);
         }
 
-        
+        function getCutRange()
+        {
+            /*$.ajax({
+                url: "http://localhost:8080/crop.php",
+                method: "POST",
+                data:
+                {  
+                    src : uri,
+                    x1: $('#x1').val(),
+                    x2: $('#x2').val(),
+                    y1: $('#y1').val(),
+                    y2: $('#y2').val(),
+                    w: $('#w').val(),
+                    h: $('#h').val()
+                },
+                success: function (data)
+                {
+                    alert(data);
+                },
+                error: function ()
+                {
+                    alert("error");
+                }
+            });
+          */
+            
+           // updatePreview();
+           
+        }
+
         //上传文件
         function upload(fileURL) {
-
-            //上传成功
+        
+           /*
             var success = function (r) {
                 console.log("上传成功! Code = " + r.responseCode);
             }
@@ -76,6 +140,7 @@
             var options = new FileUploadOptions();
             options.fileKey = "file1";
             options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+            console.log(options.fileName);
             //options.mimeType = "text/plain";
 
             //上传参数
@@ -83,20 +148,93 @@
             params.value1 = "test";
             params.value2 = "param";
             options.params = params;
+            */
 
-            var ft = new FileTransfer();
-            //上传地址
-            var SERVER = "http://www.hangge.com/upload.php"
-            ft.upload(fileURL, encodeURI(SERVER), success, fail, options);
+
+            
+            
+            
+            
+            
+            cutdown();
         };
+
+
+        function next() {
+
+            var img = getBase64Image(document.getElementById("largeImage"));
+            var name = document.getElementById("name").value;
+
+
+            if (name == "") {
+                alert("展場名稱不得為空!");
+                return;
+            }
+            
+            var storage = window.localStorage;
+            
+            if (img == 'data:,') {
+                img = getBase64Image(document.getElementById("default"));
+            }//default
+
+            storage.setItem("name", name);
+          
+            $.ajax({
+                url: "https://www.ntou.edu.tw/bin/home.php",
+                method: "POST",
+                data:
+                {  
+                    mapImage: "", 
+                    exhibition_id: name
+                },
+
+                success: function (data)
+                {
+
+                   
+                    
+                    document.location.href = "step2.html";
+                    //console.log(data);
+                },
+                error: function ()
+                {
+                    alert("something error");
+                }
+            });
+          
+
+            
+        }
+      
 
         $(document).ready(function () {
             $('.animsition').animsition({
                 inClass: 'zoom-in-sm',
                 outClass: 'zoom-out-sm'
             })
-                
+
         });
+
+        function getBase64Image(img) {
+            // Create an empty canvas element
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            // Copy the image contents to the canvas
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            // Get the data-URL formatted image
+            // Firefox supports PNG and JPEG. You could check img.src to
+            // guess the original format, but be aware the using "image/jpg"
+            // will re-encode the image.
+            var dataURL = canvas.toDataURL("image/png");
+
+            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        }
+
+    
 
     </script>
 
@@ -112,44 +250,51 @@
             font-family: 微軟正黑體;
         }
 
-        img {
-            opacity: 0.5;
-            filter: alpha(opacity=50); /* For IE8 and earlier */
-        }
 
-        img:hover {
-            opacity: 1.0;
-            filter: alpha(opacity=100); /* For IE8 and earlier */
-        }
     </style>
 
 </head>
 
-<body class ="animsition" style="padding-top:50px">
+
+
+<body class="animsition" >
     <div class="container">
         <ul class="pager">
             <li class="previous"><a href="index.html">Previous</a></li>
         </ul>
-        <div class="container">
+        <div class="container-fluid">
             <div class="jumbotron text-center">
-                <h1>Step 1 : 選擇您的平面圖</h1>
+                <h1>Step 1 : 設定展場名及瀏覽圖</h1>
             </div>
+            <span style="color:cornflowerblue">展場名稱 : </span><input type="text" id="name" required="required" />
+                <br>
+                <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);"type="button" id="next" class="btn btn-default" style="margin-top:30px;float:left;">上傳展場圖片</button>
 
-            <span style="color:cornflowerblue">您可以選擇預設的</span><br>
-            <a href="step2.html">
-                <img src="images/Rect.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;">
-            </a>
-            <a href="step2.html">
-                <img src="images/Circle.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;">
-            </a>
-            <br>
-            <br>
-            <span style="color:cornflowerblue">或載入自己的平面圖</span><br>
-            <img class="animsition-link" src="images/choose.png" style="border-radius:10px;margin-left:20px;margin-top:10px;width:40%;" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">
-            <div style="height:200px">
-
-            </div>
-           </div>
+            
+               
+                    <input type="hidden" id="x1" name="x1">
+                    <input type="hidden" id="y1" name="y1">
+                    <input type="hidden" id="x2" name="x2">
+                    <input type="hidden" id="y2" name="y2">
+                    <input type="hidden" id="w" name="w">
+                    <input type="hidden" id="h" name="h">
+                    <input type="submit" onclick="getCutRange();" id="getCutRange" class="btn btn-default" style="margin-top:30px;float:right;display:none;" value="確定截圖">
+                
+           
+               
+                <br>
+                
+                <div style="margin-top:60px;height:300px"><img style="display:none;width:300px;" id="largeImage" src=""  /></div>
+                <img style="display:none;width:300px;" id="default" src="images/ntou.png" />
+              <div>
+                    <button onclick="next();" type="button" id="next" class="btn btn-success" style="float:right">下一頁</button>
+             </div>
+                <canvas id="ca" style="display:none;"></canvas>
         </div>
-    </body>
+
+        
+
+      
+    </div>
+</body>
 </html>
