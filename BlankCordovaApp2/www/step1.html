@@ -90,8 +90,33 @@
            
             largeImage.style.display = 'block';
             largeImage.src = imageURI;
+            getBlob();
+            cutdown();
+        }
 
-            upload(imageURI);
+        function getBlob() {
+           
+            var img = new Image;
+            var c = document.createElement("canvas");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("largeImage");
+            console.log(c);
+            c.drawImage(img,10,10);
+            console.log(c);
+            
+           
+            ctx.drawImage(this, 0, 0);
+            console.log("sdasd");// draw in image
+            c.toBlob(function (blob) {        // get content as JPEG blob
+                console.log(blob);
+            }, "image/jpeg", 0.75);
+
+
+            
+
+            img.crossOrigin = "";              // if from different origin
+            img.src = "url-to-image";
+           
         }
 
         function getCutRange()
@@ -124,40 +149,7 @@
            
         }
 
-        //上传文件
-        function upload(fileURL) {
         
-           /*
-            var success = function (r) {
-                console.log("上传成功! Code = " + r.responseCode);
-            }
-
-            //上传失败
-            var fail = function (error) {
-                alert("上传失败! Code = " + error.code);
-            }
-
-            var options = new FileUploadOptions();
-            options.fileKey = "file1";
-            options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
-            console.log(options.fileName);
-            //options.mimeType = "text/plain";
-
-            //上传参数
-            var params = {};
-            params.value1 = "test";
-            params.value2 = "param";
-            options.params = params;
-            */
-
-
-            
-            
-            
-            
-            
-            cutdown();
-        };
 
 
         function next() {
@@ -180,19 +172,16 @@
             storage.setItem("name", name);
           
             $.ajax({
-                url: "https://www.ntou.edu.tw/bin/home.php",
+                url: "http://10.0.1.28:80/exhibition_server/exhibition/add_exhibition.php",
                 method: "POST",
                 data:
                 {  
-                    mapImage: "", 
-                    exhibition_id: name
+                    mapImage: img, 
+                    exhibition_name: name
                 },
 
                 success: function (data)
                 {
-
-                   
-                    
                     document.location.href = "step2.html";
                     //console.log(data);
                 },

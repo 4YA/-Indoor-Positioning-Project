@@ -17,11 +17,6 @@
     <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/three.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/circleScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src='scripts/THREEx.WindowResize.js'></script>
     <script type="text/javascript" charset="utf-8">
 
 
@@ -34,20 +29,29 @@
            
         }
 
-        window.onload = function()
-        {
-            var script = document.createElement("script");
 
-            // Add script content
+        function next() {
 
-            script.innerHTML = "s = new showScene('square');";
+                if (document.getElementById('length').value == "") {
+                    alert("長不得為空!");
+                    return;
+                }
 
-            // Append
+                if (document.getElementById('width').value == "") {
+                    alert("寬不得為空!");
+                    return;
+                }
 
-           
-            document.getElementById("showScene").appendChild(script);
+
+                if (document.getElementById('height').value == "") {
+                    alert("高不得為空!");
+                    return;
+                }
+
+                document.location.href = "step4.html";
+            
         }
-      
+
 
         $(document).ready(function () {
             $('.animsition').animsition({
@@ -57,16 +61,7 @@
 
         });
 
-        function updateScene()
-        {
-            var x = document.getElementById("length").value;
-            var y = document.getElementById("width").value;
-           
-            s.updateScene(x, y);
-            document.getElementById("next").style.display = "block";
-
-        }
-
+       
       
 
     </script>
@@ -115,14 +110,16 @@
                 <label>寬(m):</label>
                 <input type="text" class="form-control" id="width">
             </div>
-            <button type="button" class="btn" onclick="updateScene();">確定</button>
-            <strong style="margin-left:10px">注意，展場模擬只呈現長寬比例</strong>
-            <div class="container" id="showScene">
-
+            <div class="form-group">
+                <label>高(m):</label>
+                <input type="text" class="form-control" id="height">
             </div>
+           
+            
+            
           
 
-            <a href="step4.html"><button type="button" id="next" class="btn btn-success" style="display:none;float:right">下一頁</button></a>
+            <button onclick ="next();" type="button" id="next" class="btn btn-success" style="float:right">下一頁</button></a>
         </div>
        </div>
     </body>
