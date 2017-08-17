@@ -22,7 +22,9 @@
         var outside_c;
         var uri;
         var jcrop_api;
-      
+        var base64;
+        var file_data;
+        var form_data;
         
 
         function cutdown() {
@@ -54,70 +56,16 @@
             
             
         }
-        var pictureSource;
-        var destinationType;
+        
 
         document.addEventListener("deviceready", onDeviceReady, false);
 
         //Cordova加载完成会触发
         function onDeviceReady() {
-            pictureSource = navigator.camera.PictureSourceType;
-            destinationType = navigator.camera.DestinationType;
+        
         }
 
-        //获取照片
-        function getPhoto(source) {
-            //quality : 图像的质量，范围是[0,100]
-            navigator.camera.getPicture(onPhotoURISuccess,
-                function (error) { console.log("照片获取失败！") },
-                { quality: 50, destinationType: destinationType.FILE_URI, sourceType: source });
-        }
 
-        //获取照片成功
-        function onPhotoURISuccess(imageURI) {
-            //打印出照片路径
-            console.log(imageURI);
-
-            var largeImage = document.getElementById('largeImage');
-            if ($('#largeImage').data('Jcrop')) {
-                $('#largeImage').data('Jcrop').destroy();
-            }
-            largeImage.innerHTML = "";
-            //jcrop_api.destroy();
-            
-             uri = imageURI;
-            //显示照片
-           
-            largeImage.style.display = 'block';
-            largeImage.src = imageURI;
-            getBlob();
-            cutdown();
-        }
-
-        function getBlob() {
-           
-            var img = new Image;
-            var c = document.createElement("canvas");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("largeImage");
-            console.log(c);
-            c.drawImage(img,10,10);
-            console.log(c);
-            
-           
-            ctx.drawImage(this, 0, 0);
-            console.log("sdasd");// draw in image
-            c.toBlob(function (blob) {        // get content as JPEG blob
-                console.log(blob);
-            }, "image/jpeg", 0.75);
-
-
-            
-
-            img.crossOrigin = "";              // if from different origin
-            img.src = "url-to-image";
-           
-        }
 
         function getCutRange()
         {
@@ -154,74 +102,125 @@
 
         function next() {
 
-            var img = getBase64Image(document.getElementById("largeImage"));
+           
             var name = document.getElementById("name").value;
-
+            var file = document.getElementById("mapImage").value;
 
             if (name == "") {
                 alert("展場名稱不得為空!");
                 return;
             }
+
+            if (file == "") {
+                alert("展場瀏覽圖不得為空!");
+                return;
+            }
             
+           
+
             var storage = window.localStorage;
             
-            if (img == 'data:,') {
-                img = getBase64Image(document.getElementById("default"));
-            }//default
+            form_data.append('exhibition_name', name);
+            storage.setItem("form_data", form_data);
 
-            storage.setItem("name", name);
-          
-            $.ajax({
+            /*$.ajax({
                 url: "http://10.0.1.28:80/exhibition_server/exhibition/add_exhibition.php",
-                method: "POST",
-                data:
-                {  
-                    mapImage: img, 
-                    exhibition_name: name
-                },
-
+                type: 'post',
+                data: form_data,
+                processData: false,
+                contentType: false,
                 success: function (data)
                 {
-                    document.location.href = "step2.html";
-                    //console.log(data);
+                    console.log(img.length);
+                    console.log(data);
                 },
                 error: function ()
                 {
                     alert("something error");
                 }
             });
-          
+          */
 
-            
+           // document.location.href = "step2.html";
         }
       
+       
 
         $(document).ready(function () {
             $('.animsition').animsition({
                 inClass: 'zoom-in-sm',
                 outClass: 'zoom-out-sm'
-            })
+            });
 
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var largeImage = document.getElementById('largeImage');
+                largeImage.innerHTML = "";
+                
+                largeImage.src = e.target.result;
+                largeImage.style.display = "block";
+                largeImage.style.visibility = "visible";
+
+                if ($('#largeImage').data('Jcrop')) {
+                    $('#largeImage').data('Jcrop').destroy();
+                }
+
+                cutdown();
+            }
+
+
+            $('#mapImage').change(function () {
+                form_data = new FormData(document.getElementById("exhibition_data"));
+               
+                reader.readAsDataURL(this.files[0]);
+                // read the image file as a data URL.
+              
+               
+            });
         });
 
-        function getBase64Image(img) {
-            // Create an empty canvas element
+        /*function getBase64Image(img) {
+            
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
             canvas.height = img.height;
 
-            // Copy the image contents to the canvas
+           
+            
             var ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
+            
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+           
+            canvasCopy = document.createElement("canvas");
+            copyContext = canvasCopy.getContext("2d");
+            maxWidth = maxHeight = 80;
+            
+                var ratio = 1;
 
-            // Get the data-URL formatted image
-            // Firefox supports PNG and JPEG. You could check img.src to
-            // guess the original format, but be aware the using "image/jpg"
-            // will re-encode the image.
-            var dataURL = canvas.toDataURL("image/png");
+                if (img.width > maxWidth)
+                    ratio = maxWidth / img.width;
+                else if (img.height > maxHeight)
+                    ratio = maxHeight / img.height;
+               
+                canvasCopy.width = img.width;
+                canvasCopy.height = img.height;
+                copyContext.drawImage(img, 0, 0);
+               
+                canvas.width = img.width * ratio; //maxWidth
+                canvas.height = img.height * ratio; //maxHeight
+                console.log(canvas.width);
+                console.log(canvas.height);
 
-            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-        }
+                ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+            
+                 
+        
+                var dataURL = canvasCopy.toDataURL("image/png", -100);
+                 console.log(dataURL.length);
+                return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        }*/
 
     
 
@@ -238,6 +237,7 @@
             font-size: 30px;
             font-family: 微軟正黑體;
         }
+
 
 
     </style>
@@ -257,8 +257,10 @@
             </div>
             <span style="color:cornflowerblue">展場名稱 : </span><input type="text" id="name" required="required" />
                 <br>
-                <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);"type="button" id="next" class="btn btn-default" style="margin-top:30px;float:left;">上傳展場圖片</button>
-
+                <!--<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);"type="button" id="next" class="btn btn-default" style="margin-top:30px;float:left;">上傳展場圖片</button>-->
+                <form id="exhibition_data">
+                 <input type="file" id="mapImage" name="mapImage" required />
+                </form>
             
                
                     <input type="hidden" id="x1" name="x1">
@@ -273,17 +275,18 @@
                
                 <br>
                 
-                <div style="margin-top:60px;height:300px"><img style="display:none;width:300px;" id="largeImage" src=""  /></div>
-                <img style="display:none;width:300px;" id="default" src="images/ntou.png" />
+                <div style="margin-top:30px;max-width:400px;max-height:400px"><img style="max-width:400px;max-height:400px" id="largeImage" src=""  /></div>
+              
               <div>
-                    <button onclick="next();" type="button" id="next" class="btn btn-success" style="float:right">下一頁</button>
+                    <button onclick="next();" type="button" id="next" class="btn btn-success" style="margin-top:30px;float:right">下一頁</button>
              </div>
-                <canvas id="ca" style="display:none;"></canvas>
+               
         </div>
 
-        
+       
 
       
     </div>
 </body>
 </html>
+

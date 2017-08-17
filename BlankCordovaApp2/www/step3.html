@@ -48,6 +48,11 @@
                     return;
                 }
 
+                var storage = window.localStorage;
+                storage.setItem("length", length);
+                storage.setItem("length", width);
+                storage.setItem("length", height);
+
                 document.location.href = "step4.html";
             
         }
@@ -115,8 +120,6 @@
                 <input type="text" class="form-control" id="height">
             </div>
            
-            
-            
           
 
             <button onclick ="next();" type="button" id="next" class="btn btn-success" style="float:right">下一頁</button></a>

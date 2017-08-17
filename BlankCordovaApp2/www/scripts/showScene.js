@@ -1,33 +1,31 @@
-﻿showScene = function (str) {
+﻿showScene = function (length, width, height) {
 
-    var scene, renderer, camera, light;
+    var scene, renderer, camera, light, control;
     var t;
-    var s = str;
+  
     var canvas;
-    
+
+    var storage = window.localStorage;
 
     function init(){
         scene = new THREE.Scene();
         
         renderer = new THREE.WebGLRenderer({ antialias: true });
-       
-        
 
         light = new THREE.PointLight({ color: 0xffffff });
         light.position.set(0, 500, 500);
         scene.add(light);
 
-
-
         camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(0, 600, 0);
+        camera.position.set(0, 300, 300);
         camera.lookAt(scene.position);
 
-        
+        control = new THREE.OrbitControls(camera);
+       
 
        
         
-        renderer.setClearColor(0xffffff);
+        renderer.setClearColor(0xff0000);
         
       
         document.getElementById("showScene").appendChild(renderer.domElement);
@@ -35,9 +33,10 @@
        
        
         renderer.render(scene, camera);
-        canvas = document.getElementsByTagName("canvas")[0];
        
-        document.addEventListener("mousedown",test, false);
+
+        updateScene(length,width,height);
+        
 
 
 
@@ -45,13 +44,6 @@
 
 
 
-
-    }
-
-    function test(e)
-    {
-        if (e.target == canvas)
-            console.log("@@");
     }
 
     init();
@@ -67,16 +59,15 @@
 
 
 
-    this.updateScene = function (y, x) {
+    function updateScene(length, width, height) {
        
         
         if (t != undefined) {
             for (i = 0; i < t.length; i++)
                 scene.remove(t[i]);
         }
-        if (s == "circle")
-            t = new circleScene(x, y, scene);
-        else
-            t = new squareScene(x, y, scene);
+      
+
+        t = new squareScene(length, width, height, scene);
     }
 }
