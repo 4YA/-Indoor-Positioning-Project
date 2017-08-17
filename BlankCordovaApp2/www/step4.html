@@ -35,8 +35,17 @@
                 outClass: 'zoom-out-sm'
             })
 
+            
+            var storage = window.localStorage;
+            var length = storage.getItem('length');
+            var width = storage.getItem('width');
+            var height = storage.getItem('height');
+            console.log(length, width, height);
+            new showScene(length, width, height);
+
         });
 
+        
 
           /* var storage = window.localStorage;
            var length = storage.getItem('length');

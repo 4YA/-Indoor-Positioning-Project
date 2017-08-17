@@ -5,7 +5,6 @@
   
     var canvas;
 
-    var storage = window.localStorage;
 
     function init(){
         scene = new THREE.Scene();
@@ -17,19 +16,28 @@
         scene.add(light);
 
         camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(0, 300, 300);
+        camera.position.set(0, 500, 300);
         camera.lookAt(scene.position);
 
-        control = new THREE.OrbitControls(camera);
-       
+        //control = new THREE.OrbitControls(camera);
+
+        var urls = [
+            'images/px.jpg' ,'images/nx.jpg',
+            'images/py.jpg' , 'images/ny.jpg',
+            'images/pz.jpg' , 'images/nz.jpg'
+        ];
+        var reflectionCube = new THREE.CubeTextureLoader().load(urls);
+        reflectionCube.format = THREE.RGBFormat;
+        scene.background = reflectionCube;
 
        
         
-        renderer.setClearColor(0xff0000);
-        
+        renderer.domElement.width = window.innerWidth;
+        renderer.domElement.height = window.innerHeight - 200;
+        console.log(renderer.domElement);
       
         document.getElementById("showScene").appendChild(renderer.domElement);
-        THREEx.WindowResize(renderer, camera);
+      
        
        
         renderer.render(scene, camera);

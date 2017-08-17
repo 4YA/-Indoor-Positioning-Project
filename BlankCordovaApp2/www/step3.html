@@ -22,39 +22,41 @@
 
         document.addEventListener("deviceready", onDeviceReady, false);
         var s;
-        
+
 
         //Cordova加载完成会触发
         function onDeviceReady() {
-           
+
         }
 
 
         function next() {
+            var length = document.getElementById('length').value;
+            var width = document.getElementById('width').value ;
+            var height = document.getElementById('height').value;
+            if (length == "") {
+                alert("長不得為空!");
+                return;
+            }
 
-                if (document.getElementById('length').value == "") {
-                    alert("長不得為空!");
-                    return;
-                }
-
-                if (document.getElementById('width').value == "") {
-                    alert("寬不得為空!");
-                    return;
-                }
+            if (width == "") {
+                alert("寬不得為空!");
+                return;
+            }
 
 
-                if (document.getElementById('height').value == "") {
-                    alert("高不得為空!");
-                    return;
-                }
+            if (height == "") {
+                alert("高不得為空!");
+                return;
+            }
 
-                var storage = window.localStorage;
-                storage.setItem("length", length);
-                storage.setItem("length", width);
-                storage.setItem("length", height);
+            var storage = window.localStorage;
+            storage.setItem("length", length);
+            storage.setItem("width", width);
+            storage.setItem("height", height);
 
-                document.location.href = "step4.html";
-            
+            document.location.href = "step4.html";
+
         }
 
 
@@ -66,8 +68,8 @@
 
         });
 
-       
-      
+
+
 
     </script>
 
@@ -119,11 +121,11 @@
                 <label>高(m):</label>
                 <input type="text" class="form-control" id="height">
             </div>
-           
-          
 
-            <button onclick ="next();" type="button" id="next" class="btn btn-success" style="float:right">下一頁</button></a>
+
+
+            <button onclick="next();" type="button" id="next" class="btn btn-success" style="float:right">下一頁</button></a>
         </div>
-       </div>
-    </body>
+    </div>
+</body>
 </html>

@@ -19,16 +19,29 @@
     <script type="text/javascript" charset="utf-8" src="scripts/OrbitControls.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
-    <script type="text/javascript" charset="utf-8" src="scripts/beaconCircle.js"></script>
-    <script type="text/javascript" charset="utf-8" src='scripts/THREEx.WindowResize.js'></script>
+  
     
 
     
 </head>
 
 <body>
-    <div class="container" id="showScene">
-      
+    <div class="container"id="showScene">
+        <script>
+            var storage = window.localStorage;
+            var length = storage.getItem('length');
+            var width = storage.getItem('width');
+            var height = storage.getItem('height');
+            console.log(length, width, height);
+            new showScene(length,width,height);
+        </script>
+    </div>
+    <div> 
+        你要放置的Beacon : HM???   <br />
+        x :<input id="x" type="number"/><br />
+        y :<input id="y" type="number" /> <br />
+        z :<input id="z" type="number" />
+        <a href="step4.html"><button type="button" id="next" class="btn btn-success">確定</button></a>
     </div>
 </body>
 </html>
