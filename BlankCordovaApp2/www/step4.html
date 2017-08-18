@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>step4</title>
+
+    <!--
+        視需要在下方的中繼標籤中自訂內容安全性原則。將 'unsafe-inline' 加入 default-src 以啟用內嵌 JavaScript。
+        如需詳細資料，請參閱 http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/animsition.min.css">
+
+
+
+    <script type="text/javascript" charset="utf-8" src="scripts/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/beacon.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/three.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/OrbitControls.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('.animsition').animsition({
+                inClass: 'zoom-in-sm',
+                outClass: 'zoom-out-sm'
+            })
+
+            
+            
+
+        });
+
+        
+
+          /* var storage = window.localStorage;
+           var length = storage.getItem('length');
+           var width = storage.getItem('width');
+           var height = storage.getItem('height');
+           new showScene(length,width,height);*/
+    </script>
+</head>
+
+<body class="animsition">
+    <div class="container">
+        <ul class="pager">
+            <li class="previous"><a href="step3.html">Previous</a></li>
+        </ul>
+    
+            <div class="jumbotron text-center">
+                <h1>Step 4 : 設置你的beacon點</h1>
+            </div>
+  
+            <div id="showBeacon" style ="height:50%;" overflow =" scroll">
+                <a href="step5.html"><button type="button" id="next" style="float:right;" class="btn btn-success">下一頁</button></a>
+            </div>
+
+            <div id="setBeacon" style="display:none;">
+                <div class="container" id="showScene">
+                    <script>
+                        var storage = window.localStorage;
+                        var length = storage.getItem('length');
+                        var width = storage.getItem('width');
+                        var height = storage.getItem('height');
+                        console.log(length, width, height);
+                        new showScene(length, width, height);
+                        function check() {
+                            storage.setItem("beacon_positionX", document.getElementById("x").value);
+                            storage.setItem("beacon_positionY", document.getElementById("y").value);
+                            storage.setItem("beacon_positionZ", document.getElementById("z").value);
+                            console.log(storage.getItem("beacon_positionX"));
+                            document.getElementById("setBeacon").style.display = "none";
+                            document.getElementById("showBeacon").style.display = "block"; 
+                        }
+                    </script>
+                </div>
+                <div>
+                    你要放置的Beacon : HM???   <br />
+                    x :<input id="x" type="number" /><br />
+                    y :<input id="y" type="number" /> <br />
+                    z :<input id="z" type="number" />
+                    <button type="button" id="previous" class="btn btn-success" onclick="check()">確定</button>
+                </div>
+            </div>
+            
+     </div>
+            
+</body>
+</html>

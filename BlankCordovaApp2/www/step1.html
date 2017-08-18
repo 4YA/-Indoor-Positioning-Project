@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>step1</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/animsition.min.css">
+
+
+    <script type="text/javascript" charset="utf-8" src="scripts/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/animsition.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="scripts/jquery.Jcrop.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        var outside_c;
+        var uri;
+        var jcrop_api;
+        var base64;
+        var file_data;
+        var form_data;
+        
+
+        function cutdown() {
+            jQuery(function ($) {
+                
+                $('#largeImage').Jcrop({
+                    onChange: changeCoords,
+                    onSelect: changeCoords,
+                }, function () {
+                  
+                    jcrop_api = this;
+                    allowResize = false;
+                });
+
+            });
+
+            function changeCoords(c) {
+
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#x2').val(c.x2);
+                $('#y2').val(c.y2);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                outside_c = c;  
+              
+                document.getElementById("getCutRange").style.display = "block";
+            };
+            
+            
+        }
+        
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        //Cordova加载完成会触发
+        function onDeviceReady() {
+        
+        }
+
+
+
+        function getCutRange()
+        {
+            /*$.ajax({
+                url: "http://localhost:8080/crop.php",
+                method: "POST",
+                data:
+                {  
+                    src : uri,
+                    x1: $('#x1').val(),
+                    x2: $('#x2').val(),
+                    y1: $('#y1').val(),
+                    y2: $('#y2').val(),
+                    w: $('#w').val(),
+                    h: $('#h').val()
+                },
+                success: function (data)
+                {
+                    alert(data);
+                },
+                error: function ()
+                {
+                    alert("error");
+                }
+            });
+          */
+            
+           // updatePreview();
+           
+        }
+
+        
+
+
+        function next() {
+
+           
+            var name = document.getElementById("name").value;
+            var file = document.getElementById("mapImage").value;
+
+            if (name == "") {
+                alert("展場名稱不得為空!");
+                return;
+            }
+
+            if (file == "") {
+                alert("展場瀏覽圖不得為空!");
+                return;
+            }
+            
+           
+
+            var storage = window.localStorage;
+            
+            form_data.append('exhibition_name', name);
+            storage.setItem("form_data", form_data);
+
+            /*$.ajax({
+                url: "http://10.0.1.28:80/exhibition_server/exhibition/add_exhibition.php",
+                type: 'post',
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (data)
+                {
+                    console.log(img.length);
+                    console.log(data);
+                },
+                error: function ()
+                {
+                    alert("something error");
+                }
+            });
+          */
+
+            document.location.href = "step2.html";
+        }
+      
+       
+
+        $(document).ready(function () {
+            $('.animsition').animsition({
+                inClass: 'zoom-in-sm',
+                outClass: 'zoom-out-sm'
+            });
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var largeImage = document.getElementById('largeImage');
+                largeImage.innerHTML = "";
+                
+                largeImage.src = e.target.result;
+                largeImage.style.display = "block";
+                largeImage.style.visibility = "visible";
+
+                if ($('#largeImage').data('Jcrop')) {
+                    $('#largeImage').data('Jcrop').destroy();
+                }
+
+                cutdown();
+            }
+
+
+            $('#mapImage').change(function () {
+                form_data = new FormData(document.getElementById("exhibition_data"));
+               
+                reader.readAsDataURL(this.files[0]);
+                // read the image file as a data URL.
+              
+               
+            });
+        });
+
+        /*function getBase64Image(img) {
+            
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+           
+            
+            var ctx = canvas.getContext("2d");
+            
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+           
+            canvasCopy = document.createElement("canvas");
+            copyContext = canvasCopy.getContext("2d");
+            maxWidth = maxHeight = 80;
+            
+                var ratio = 1;
+
+                if (img.width > maxWidth)
+                    ratio = maxWidth / img.width;
+                else if (img.height > maxHeight)
+                    ratio = maxHeight / img.height;
+               
+                canvasCopy.width = img.width;
+                canvasCopy.height = img.height;
+                copyContext.drawImage(img, 0, 0);
+               
+                canvas.width = img.width * ratio; //maxWidth
+                canvas.height = img.height * ratio; //maxHeight
+                console.log(canvas.width);
+                console.log(canvas.height);
+
+                ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+            
+                 
+        
+                var dataURL = canvasCopy.toDataURL("image/png", -100);
+                 console.log(dataURL.length);
+                return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        }*/
+
+    
+
+    </script>
+
+    <style>
+        .container-fluid {
+            min-height: 100%;
+            height: 100%;
+        }
+
+        span {
+            font-weight: bold;
+            font-size: 30px;
+            font-family: 微軟正黑體;
+        }
+
+
+
+    </style>
+
+</head>
+
+
+
+<body class="animsition" >
+    <div class="container">
+        <ul class="pager">
+            <li class="previous"><a href="index.html">Previous</a></li>
+        </ul>
+        <div class="container-fluid">
+            <div class="jumbotron text-center">
+                <h1>Step 1 : 設定展場名及瀏覽圖</h1>
+            </div>
+            <span style="color:cornflowerblue">展場名稱 : </span><input type="text" id="name" required="required" />
+                <br>
+                <!--<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);"type="button" id="next" class="btn btn-default" style="margin-top:30px;float:left;">上傳展場圖片</button>-->
+                <form id="exhibition_data">
+                 <input type="file" id="mapImage" name="mapImage" required />
+                </form>
+            
+               
+                    <input type="hidden" id="x1" name="x1">
+                    <input type="hidden" id="y1" name="y1">
+                    <input type="hidden" id="x2" name="x2">
+                    <input type="hidden" id="y2" name="y2">
+                    <input type="hidden" id="w" name="w">
+                    <input type="hidden" id="h" name="h">
+                    <input type="submit" onclick="getCutRange();" id="getCutRange" class="btn btn-default" style="margin-top:30px;float:right;display:none;" value="確定截圖">
+                
+           
+               
+                <br>
+                
+                <div style="margin-top:30px;max-width:400px;max-height:400px"><img style="max-width:400px;max-height:400px" id="largeImage" src=""  /></div>
+              
+              <div>
+                    <button onclick="next();" type="button" id="next" class="btn btn-success" style="margin-top:30px;float:right">下一頁</button>
+             </div>
+               
+        </div>
+
+       
+
+      
+    </div>
+</body>
+</html>
+
