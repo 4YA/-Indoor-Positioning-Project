@@ -43,16 +43,19 @@
                     case 'Beacons':
                         var beacon = document.createElement('div');
                         beacon.setAttribute("id", name);
-                        /*
+                        
                         input.type = "image";
                         input.src = "images/beacon.png"
-                        input.style.cssText = "width:20%;height:20%;float:left";
-                        input.addEventListener('click', function () {
-                            click(message);
+                        input.style.cssText = "width:20%;height:20%;float:right";
+                        beacon.addEventListener('click', function () {
+                            document.getElementById("showBeacon").style.display = "none";
+                            document.getElementById("setBeacon").style.display = "block";
+                          
                         });
                         beacon.appendChild(input);
-                        */
-                        document.body.appendChild(beacon);
+                        document.getElementById('showBeacon').appendChild(beacon);
+
+                        
                         break;
                 }
             }
@@ -70,7 +73,7 @@
             document.body.appendChild(br2);
             */
 
-            window.scrollTo(0, window.document.height);
+            //window.scrollTo(0, window.document.height);
         };
 
         var delegate = new cordova.plugins.locationManager.Delegate();
