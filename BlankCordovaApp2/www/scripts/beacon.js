@@ -17,6 +17,8 @@
             var minor = message["minor"];
             var accuracy = message["accuracy"];
             var rssi = message["rssi"];
+            var beaconName = document.getElementById("beaconName");
+          
 
 
             var existBeacon = document.getElementById(name + "_" + major + "_" + minor);
@@ -26,7 +28,7 @@
 
             if (existBeacon != undefined) {
 
-                existBeacon.innerHTML = '<a href = "setBeacon.html"><img src = "images/beacon.png" style = "width:15%;height:15%;float:left;margin-right:5%;margin-left:5%;"></a>';
+                existBeacon.innerHTML = '<img src = "images/beacon.png" style = "width:15%;height:15%;float:left;margin-right:5%;margin-left:5%;">';
 
                 existBeacon.innerHTML += "name : " + name + "<br>"
                     + "major : " + major + "<br>"
@@ -42,15 +44,15 @@
                         break;
                     case 'Beacons':
                         var beacon = document.createElement('div');
-                        beacon.setAttribute("id",name + "_" + major + "_" + minor);
-                        
-                        input.type = "image";
-                        input.src = "images/beacon.png"
-                        input.style.cssText = "width:20%;height:20%;float:right";
+                       
+                        beacon.setAttribute("id", name + "_" + major + "_" + minor);
+                        beacon.classList.add('beacon');
+                       
                         beacon.addEventListener('click', function () {
-                            document.getElementById("showBeacon").style.display = "none";
-                            document.getElementById("setBeacon").style.display = "block";
-                          
+                            $("#showBeacon").hide(1000);
+                            $("#setBeacon").show(1000);
+                            beaconName.innerHTML = "<strong>你要放置的Beacon : " + name + "</strong> <br />";
+                            temp = name + "_" + major + "_" + minor;
                         });
                         beacon.appendChild(input);
                         document.getElementById('showBeacon').appendChild(beacon);
@@ -221,3 +223,4 @@
             .done();
     }
 }
+

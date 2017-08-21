@@ -15,9 +15,12 @@
         light.position.set(0, 500, 500);
         scene.add(light);
 
-        camera = new THREE.PerspectiveCamera(40, 400 / 300, 1, 1000);
-        camera.position.set(0, 500, 300);
-        camera.lookAt(scene.position);
+
+        camera = new THREE.PerspectiveCamera(7.5, 400 / 300, 1, 1000);
+        camera.position.set(0, height + 1,0);
+        console.log(camera);
+        
+        camera.rotateX(-Math.PI / 2);
 
         //control = new THREE.OrbitControls(camera);
 
@@ -32,9 +35,8 @@
 
        
         
-        renderer.domElement.width = window.innerWidth;
-        renderer.domElement.height = window.innerHeight - 200;
-        console.log(renderer.domElement);
+       
+
       
         document.getElementById("showScene").appendChild(renderer.domElement);
       
