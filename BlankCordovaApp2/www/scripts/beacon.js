@@ -19,7 +19,7 @@
             var rssi = message["rssi"];
 
 
-            var existBeacon = document.getElementById(message["name"]);
+            var existBeacon = document.getElementById(name + "_" + major + "_" + minor);
             var br = document.createElement('br');
             var p = document.createElement('p');
             var input = document.createElement('input');
@@ -42,7 +42,7 @@
                         break;
                     case 'Beacons':
                         var beacon = document.createElement('div');
-                        beacon.setAttribute("id", name);
+                        beacon.setAttribute("id",name + "_" + major + "_" + minor);
                         
                         input.type = "image";
                         input.src = "images/beacon.png"

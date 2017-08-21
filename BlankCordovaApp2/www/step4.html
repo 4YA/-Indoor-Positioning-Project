@@ -86,10 +86,15 @@
                             document.getElementById("setBeacon").style.display = "none";
                             document.getElementById("showBeacon").style.display = "block"; 
                         }
+
+                        $('div').click(function (evt) {
+                            var currentID = this.attr('id') || "No ID!";
+                            document.getElementById('title').innerHTML = currentID;
+                        });
                     </script>
                 </div>
                 <div>
-                    你要放置的Beacon : HM???   <br />
+                    <span id="title"></span>   <br />
                     x :<input id="x" type="number" /><br />
                     y :<input id="y" type="number" /> <br />
                     z :<input id="z" type="number" />
