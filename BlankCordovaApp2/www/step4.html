@@ -28,7 +28,16 @@
     <script type="text/javascript" charset="utf-8" src="scripts/OrbitControls.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
-
+    <style>
+        h6{
+            float:left
+        }
+        input {
+            float: left;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    </style>
 
 
 
@@ -40,6 +49,25 @@
                 outClass: 'zoom-out-sm'
             })
 
+            $("#certain").click(function () {
+               
+                storage.setItem("beacon_positionX", document.getElementById("x").value);
+                storage.setItem("beacon_positionY", document.getElementById("y").value);
+                storage.setItem("beacon_positionZ", document.getElementById("z").value);
+
+                   
+                $("#setBeacon").hide(1000);
+                $("#showBeacon").show(1000);
+            });
+
+            $("#go").click(function () {
+
+               
+
+
+                $("#showBeacon").hide(1000);
+                $("#setBeacon").show(1000);
+            });
             
             
 
@@ -65,12 +93,13 @@
                 <h1>Step 4 : 設置你的beacon點</h1>
             </div>
   
-            <div id="showBeacon" style ="height:50%;" overflow =" scroll">
+            <div id="showBeacon" style ="height:50%;" overflow ="scroll">
+                <button id="go">GO</button>
                 <a href="step5.html"><button type="button" id="next" style="float:right;" class="btn btn-success">下一頁</button></a>
             </div>
 
-            <div id="setBeacon" style="display:none;">
-                <div class="container" id="showScene">
+            <div class="container fill" id="setBeacon" style="height:100%;display:none;">
+                <div id="showScene">
                     <script>
                         var storage = window.localStorage;
                         var length = storage.getItem('length');
@@ -78,22 +107,16 @@
                         var height = storage.getItem('height');
                         console.log(length, width, height);
                         new showScene(length, width, height);
-                        function check() {
-                            storage.setItem("beacon_positionX", document.getElementById("x").value);
-                            storage.setItem("beacon_positionY", document.getElementById("y").value);
-                            storage.setItem("beacon_positionZ", document.getElementById("z").value);
-                            console.log(storage.getItem("beacon_positionX"));
-                            document.getElementById("setBeacon").style.display = "none";
-                            document.getElementById("showBeacon").style.display = "block"; 
-                        }
+                       
+                        
                     </script>
                 </div>
                 <div>
-                    你要放置的Beacon : HM???   <br />
-                    x :<input id="x" type="number" /><br />
-                    y :<input id="y" type="number" /> <br />
-                    z :<input id="z" type="number" />
-                    <button type="button" id="previous" class="btn btn-success" onclick="check()">確定</button>
+                    <strong>你要放置的Beacon : HM??? </strong><br />
+                    <h6> x :</h6><input id="x" type="number" style="float:left;width:10%"/>
+                    <h6> y :</h6><input id="y" type="number" style="float:left;width:10%"/>
+                    <h6> z :</h6><input id="z" type="number" style="float:left;width:10%"/>
+                    <button type="button" id="certain" class="btn btn-success" style="float:right">確定</button>
                 </div>
             </div>
             
