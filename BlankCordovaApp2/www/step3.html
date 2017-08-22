@@ -50,11 +50,17 @@
                 return;
             }
 
-            var storage = window.localStorage;
-            storage.setItem("length", length);
-            storage.setItem("width", width);
-            storage.setItem("height", height);
 
+
+            var storage = window.localStorage;
+         
+            
+
+            storage.setItem('length', length);
+            storage.setItem('width', width);
+            storage.setItem('height', height);
+           
+            
             document.location.href = "step4.html";
 
         }

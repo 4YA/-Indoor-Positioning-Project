@@ -53,11 +53,6 @@
 
 
             $("#certain").click(function () {
-              
-                //storage.setItem("beacon_positionX", document.getElementById("x").value);
-                //storage.setItem("beacon_positionY", document.getElementById("y").value);
-                //storage.setItem("beacon_positionZ", document.getElementById("z").value);
-
                 var beaconObject = new beaconObj(temp.split("_")[0], temp.split("_")[1], temp.split("_")[2],
                                                 document.getElementById("x").value, document.getElementById("y").value, document.getElementById("z").value);
                 beaconArray.push(beaconObject);
@@ -66,9 +61,13 @@
                 $("#showBeacon").show(1000);
             });
 
+
             $("#next").click(function () {
-                window.localStorage.setItem('beaconArray', beaconArray);
-                window.location.href = "step5.html";
+                var storage = window.localStorage;
+
+                storage.setItem('beaconArray', beaconArray);
+              
+               window.location.href = "step5.html";
             });
         });
 
