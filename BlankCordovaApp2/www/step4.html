@@ -56,7 +56,7 @@
                 var beaconObject = new beaconObj(temp.split("_")[0], temp.split("_")[1], temp.split("_")[2],
                                                 document.getElementById("x").value, document.getElementById("y").value, document.getElementById("z").value);
                 beaconArray.push(beaconObject);
-                   
+               
                 $("#setBeacon").hide(1000);
                 $("#showBeacon").show(1000);
             });
@@ -64,9 +64,8 @@
 
             $("#next").click(function () {
                 var storage = window.localStorage;
+                storage.setItem('beaconArray', JSON.stringify(beaconArray));
 
-                storage.setItem('beaconArray', beaconArray);
-              
                window.location.href = "step5.html";
             });
         });
