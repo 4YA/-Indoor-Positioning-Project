@@ -104,8 +104,9 @@
 
            
             var name = document.getElementById("name").value;
+            var intro = document.getElementById("intro").value;
             var file = document.getElementById("mapImage").value;
-
+            console.log(intro);
             if (name == "") {
                 alert("展場名稱不得為空!");
                 return;
@@ -121,10 +122,10 @@
             var storage = window.localStorage;
 
             form_data.set("exhibition_name",name)
-            
+            form_data.set("exhibition_intro",intro)
 
 
-            $.ajax({
+           /* $.ajax({
                 //url: "http://10.0.1.28:80/exhibition_server/exhibition/add_exhibition.php",
                 url: "http://192.168.43.178:80/exhibition_server/exhibition/add_exhibition.php",
                 type: 'post',
@@ -139,7 +140,7 @@
                 {
                     alert("something error");
                 }
-            });
+            });*/
           
 
            
@@ -256,6 +257,7 @@
                 <h1>Step 1 : 設定展場名及瀏覽圖</h1>
             </div>
             <span style="color:cornflowerblue">展場名稱 : </span><input type="text" id="name" required="required" />
+            <span style="color:cornflowerblue">展場簡介 : </span><textarea id="intro" name="Text1" cols="40" rows="5"></textarea>
                 <br>
                 <!--<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);"type="button" id="next" class="btn btn-default" style="margin-top:30px;float:left;">上傳展場圖片</button>-->
                 <form id="exhibition_data">

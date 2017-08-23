@@ -49,8 +49,8 @@
                         beacon.classList.add('beacon');
                        
                         beacon.addEventListener('click', function () {
-                            $("#showBeacon").hide(1000);
-                            $("#setBeacon").show(1000);
+                            $("#showBeacon").hide(0);
+                            $("#setBeacon").show(300);
                             beaconName.innerHTML = "<strong>你要放置的Beacon : " + name + "</strong> <br />";
                             temp = name + "_" + major + "_" + minor;
                         });

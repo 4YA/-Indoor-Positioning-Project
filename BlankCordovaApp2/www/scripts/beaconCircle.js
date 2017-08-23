@@ -1,11 +1,11 @@
-﻿beaconCircle = function(scene) {
+﻿beaconCircle = function(scene,c) {
 
     
 
 
-    var geometry = new THREE.CylinderGeometry(50, 5, 50, 32);
-
-    var material = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+    var geometry = new THREE.CylinderGeometry(2, 2, 1, 32);
+    
+    var material = new THREE.MeshLambertMaterial({ color: c });
 
     var floor = new THREE.Mesh(geometry, material);
 

@@ -44,15 +44,6 @@
                 height = storage.getItem('height');
                 beaconArray = JSON.parse(storage.getItem('beaconArray'));
 
-                for (var i = 0; i < beaconArray.length; i++) {
-                    console.log(beaconArray[i].name);
-                    console.log(beaconArray[i].major);
-                    console.log(beaconArray[i].minor);
-                    console.log(beaconArray[i].x);
-                    console.log(beaconArray[i].y);
-                    console.log(beaconArray[i].z);
-                }
-
                 $.ajax({
                     //url: "http://10.0.1.28:80/exhibition_server/add.php",
                     url: "http://192.168.43.178:80/exhibition_server/add.php",
@@ -94,7 +85,7 @@
 
             <br>
         </div>
-        <a href="setBeacon.html"><button id="testBtn">testBtn</button></a>
+      
         <button type="button" id="next" class="btn btn-success">下一頁</button>
     </div>
 

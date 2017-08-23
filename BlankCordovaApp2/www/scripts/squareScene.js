@@ -1,11 +1,26 @@
-﻿var squareScene = function(length,width,height,scene)
+﻿var squareScene = function(reduction,length,width,height,scene)
 {
 
     var obj = [];
-    
    
+    var standary = 100;
 
-    var geometry = new THREE.BoxGeometry(length, 5, width);
+
+    if (length > width) {
+        reduction.r = length / standary;
+        
+        length = length / reduction.r;
+        width = width / reduction.r;
+    }
+    else {
+        reduction.r = width / standary;
+        length = length / reduction.r;
+        width = width / reduction.r;
+    }
+
+    console.log(length);
+    console.log(width);
+    var geometry = new THREE.BoxGeometry(length, width / 100, width);
     var material = new THREE.MeshLambertMaterial({ color: 0xEE7700 });
     var loader = new THREE.TextureLoader();
     var floor = new THREE.Mesh(geometry, material);
@@ -20,7 +35,7 @@
     
     
 
-    geometry = new THREE.BoxGeometry(length,height,5);
+    geometry = new THREE.BoxGeometry(length, height, width / 100);
     material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     var wall = new THREE.Mesh(geometry, material);
     texture = loader.load("images/whiteWall.jpg", function () {
@@ -31,15 +46,7 @@
         scene.add(wall);
     });
 
-
-
-
-   
-   
-
-
-
-    geometry = new THREE.BoxGeometry(5, height, width);
+    geometry = new THREE.BoxGeometry(width / 100, height, width);
     material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     var wall2 = new THREE.Mesh(geometry, material);
     texture = loader.load("images/whiteWall.jpg",function () {
@@ -50,7 +57,7 @@
         scene.add(wall2);
     });
     
-    geometry = new THREE.BoxGeometry(5, height, width);
+    geometry = new THREE.BoxGeometry(width / 100, height, width);
     material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     var wall3 = new THREE.Mesh(geometry, material);
     texture = loader.load("images/whiteWall.jpg", function () {

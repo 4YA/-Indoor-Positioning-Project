@@ -28,18 +28,22 @@
     <script type="text/javascript" charset="utf-8" src="scripts/OrbitControls.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/showScene.js"></script>
     <script type="text/javascript" charset="utf-8" src="scripts/squareScene.js"></script>
-
+    <script type="text/javascript" charset="utf-8" src="scripts/beaconCircle.js"></script>
     <style>
-        h6{
-            float:left
+        h6 {
+            float: left
         }
+
         input {
             float: left;
             margin-left: 10px;
             margin-right: 10px;
         }
-    </style>
 
+        strong {
+            color: red;
+        }
+    </style>
 
 
 
@@ -51,27 +55,49 @@
                 outClass: 'zoom-out-sm'
             })
 
+            var beaconArray = [];
+            var storage = window.localStorage;
+            var scene;
+
+            if (storage.getItem("beaconArray") != "")
+                beaconArray = JSON.parse(storage.getItem('beaconArray'));
+
+            var temp;
+
 
             $("#certain").click(function () {
                 var beaconObject = new beaconObj(temp.split("_")[0], temp.split("_")[1], temp.split("_")[2],
-                                                document.getElementById("x").value, document.getElementById("y").value, document.getElementById("z").value);
+                    document.getElementById("x").value, document.getElementById("y").value, document.getElementById("z").value);
                 beaconArray.push(beaconObject);
-               
-                $("#setBeacon").hide(1000);
-                $("#showBeacon").show(1000);
+                
+                scene.addBeaconCircle(beaconObject);
+                $("#setBeacon").hide(0);
+                $("#showBeacon").show(300);
             });
 
+            $("#test").click(function () {
+                $("#showBeacon").hide(0);
+                $("#setBeacon").show(300);
+                temp = "beacon_ss_ww";
+            });
 
             $("#next").click(function () {
                 var storage = window.localStorage;
                 storage.setItem('beaconArray', JSON.stringify(beaconArray));
 
-               window.location.href = "step5.html";
+                window.location.href = "step5.html";
             });
+            var storage = window.localStorage;
+            var length = storage.getItem('length');
+            var width = storage.getItem('width');
+            var height = storage.getItem('height');
+           
+            scene = new showScene(length, width, height);
         });
 
-        var beaconArray = [];
-        var temp;
+
+      
+
 
         function beaconObj(name, minor, major, x, y, z) {
             this.name = name;
@@ -82,8 +108,8 @@
             this.z = z;
         }
 
-       
-        
+
+
 
           /* var storage = window.localStorage;
            var length = storage.getItem('length');
@@ -98,46 +124,40 @@
         <ul class="pager">
             <li class="previous"><a href="step3.html">Previous</a></li>
         </ul>
-    
-            <div class="jumbotron text-center">
-                <h1>Step 4 : 設置你的beacon點</h1>
+
+        <div class="jumbotron text-center">
+            <h1>Step 4 : 設置你的beacon點</h1>
+        </div>
+
+
+
+
+        <div id="showBeacon" style="height:50%;" overflow="scroll">
+            <button type="button" id="test" class="btn  btn-success">Test</button>
+            <button type="button" id="next" style="float:right;" class="btn btn-success">下一頁</button>
+        </div>
+
+        <div class="container fill" id="setBeacon" style="height:100%;display:none;">
+            <div id="showScene">
+
             </div>
-  
-            
 
-           
-            <div id="showBeacon" style ="height:50%;" overflow ="scroll">
- 
-                <button type="button" id="next" style="float:right;" class="btn btn-success">下一頁</button>
+            <div>
+                <span id="beaconName"></span><br />
+                <h6> x :</h6><input id="x" type="number" style="float:left;width:10%" />
+                <h6> y :</h6><input id="y" type="number" style="float:left;width:10%" />
+                <h6> z :</h6><input id="z" type="number" style="float:left;width:10%" />
+                <br />
+                <br />
+                <strong>展場瀏覽圖只以比例模擬，不代表實際長度</strong><br />
+                <strong>這邊的xyz對應的是展場的長高寬</strong><br />
+                <strong>請以beacon相對於展場之位置輸入</strong><br />
+                <button type="button" id="certain" class="btn btn-success" style="float:right">確定</button>
+
             </div>
+        </div>
 
-            <div class="container fill" id="setBeacon" style="height:100%;display:none;">
-                <div id="showScene">
+    </div>
 
-                    <script>
-                        var storage = window.localStorage;
-                        var length = storage.getItem('length');
-                        var width = storage.getItem('width');
-                        var height = storage.getItem('height');
-                        console.log(length, width, height);
-                        new showScene(length, width, height);
-
-                        
-                       
-                    </script>
-                </div>
-               
-                <div>
-                    <span id="beaconName"></span><br />
-                    <h6> x :</h6><input id="x" type="number" style="float:left;width:10%"/>
-                    <h6> y :</h6><input id="y" type="number" style="float:left;width:10%"/>
-                    <h6> z :</h6><input id="z" type="number" style="float:left;width:10%"/>
-                    <button type="button" id="certain" class="btn btn-success" style="float:right">確定</button>
-
-                </div>
-            </div>
-            
-     </div>
-            
 </body>
 </html>
